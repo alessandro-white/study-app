@@ -1,21 +1,29 @@
-﻿
-
-class Topics
+﻿class Module
 {
-    public string Title { get; set; }
-    public string Body { get; set; }
+    public string Name { get; set; }
+    public int OwnerID { get; set; }
     public int ID { get; set; }
 }
 
-class notes : Topics
+class Note
 {
-    public string note { get; set; }
+    public int ID { get; set; }
+    public int ModuleID { get; set; }
+    public string Title { get; set; }
+    public string Body { get; set; }
+    public DateTime LastReviewed { get; set; }
+    public int Interval { get; set; }
+    public int Repetitions { get; set; }
+    public double Easiness { get; set; }
 }
 
-class account
+class Account
 {
-    private string Username { get; set; }
-    private string Email { get; set; }
-    private string Password { get; set; }
+    public string Username { get; private set; }
+    public string Email { get; private set; }
+    public string PasswordHash { get; private set; }
+    public int ID { get; private set; }
 }
+
+
 
