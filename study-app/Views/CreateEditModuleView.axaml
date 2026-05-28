@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:StudyApp.ViewModels"
+             x:Class="StudyApp.Views.CreateEditModuleView"
+             x:DataType="vm:CreateEditModuleViewModel"
+             Background="#F5F5F7">
+  <Grid RowDefinitions="*,Auto,*">
+    <Border Grid.Row="1"
+            Background="White"
+            CornerRadius="16"
+            Padding="36"
+            Width="420"
+            BoxShadow="0 4 24 0 #1A000000"
+            HorizontalAlignment="Center">
+      <StackPanel Spacing="20">
+        <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="Bold" Foreground="#1D1D1F"/>
+
+        <StackPanel Spacing="8">
+          <TextBlock Text="Name" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Name}" Watermark="Module name" CornerRadius="10" Padding="12,10"/>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+          <TextBlock Text="Description" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Description}" Watermark="Optional description" CornerRadius="10" Padding="12,10" Height="80" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+          <TextBlock Text="Color" FontSize="13" Foreground="#3C3C43"/>
+          <ItemsControl ItemsSource="{Binding ColorOptions}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Button Background="{Binding}"
+                        Width="32" Height="32"
+                        Command="{Binding $parent[ItemsControl].((vm:CreateEditModuleViewModel)DataContext).SelectColorCommand}"
+                        CommandParameter="{Binding}"
+                        CornerRadius="16"
+                        Margin="0,0,8,8"
+                        Padding="0"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <Border Background="{Binding Color}" Height="24" CornerRadius="8" Padding="12,2">
+            <TextBlock Text="{Binding Color}" FontSize="12" Foreground="White" VerticalAlignment="Center"/>
+          </Border>
+        </StackPanel>
+
+        <TextBlock Text="{Binding ErrorMessage}" Foreground="#FF3B30" FontSize="13"
+                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <Grid ColumnDefinitions="*,*" HorizontalAlignment="Stretch">
+          <Button Content="Cancel"
+                  Command="{Binding CancelCommand}"
+                  Background="#F2F2F7"
+                  Foreground="#1D1D1F"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Margin="0,0,8,0"/>
+          <Button Grid.Column="1"
+                  Content="Save"
+                  Command="{Binding SaveCommand}"
+                  Background="#007AFF"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Margin="8,0,0,0"/>
+        </Grid>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
