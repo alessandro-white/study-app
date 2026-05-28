@@ -1,0 +1,91 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:StudyApp.ViewModels"
+             xmlns:models="clr-namespace:StudyApp.Models"
+             x:Class="StudyApp.Views.ModuleDetailView"
+             x:DataType="vm:ModuleDetailViewModel"
+             Background="#F5F5F7">
+  <Grid RowDefinitions="Auto,*">
+    <!-- Top Bar -->
+    <Border Grid.Row="0" Background="White" Padding="24,16" BoxShadow="0 1 0 0 #15000000">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <Button Content="← Back"
+                Command="{Binding BackCommand}"
+                Background="Transparent"
+                Foreground="#007AFF"
+                Padding="0,8"
+                FontSize="15"/>
+        <TextBlock Grid.Column="1"
+                   Text="{Binding Module.Name}"
+                   FontSize="20" FontWeight="SemiBold"
+                   Foreground="#1D1D1F"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10">
+          <Button Content="Study Due"
+                  Command="{Binding StudyCommand}"
+                  Background="#34C759"
+                  Foreground="White"
+                  CornerRadius="8"
+                  Padding="14,8"
+                  FontWeight="SemiBold"/>
+          <Button Content="+ Add Card"
+                  Command="{Binding AddNoteCommand}"
+                  Background="#007AFF"
+                  Foreground="White"
+                  CornerRadius="8"
+                  Padding="14,8"
+                  FontWeight="SemiBold"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Notes List -->
+    <ScrollViewer Grid.Row="1" Padding="24">
+      <ItemsControl ItemsSource="{Binding Notes}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="{x:Type models:Note}">
+            <Border Background="White" CornerRadius="12" Padding="20,16"
+                    BoxShadow="0 1 8 0 #0D000000" Margin="0,0,0,12">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="6">
+                  <TextBlock Text="FRONT" FontSize="11" FontWeight="SemiBold"
+                             Foreground="#8E8E93" LetterSpacing="1"/>
+                  <TextBlock Text="{Binding Front}" FontSize="15" Foreground="#1D1D1F" TextWrapping="Wrap"/>
+                  <TextBlock Text="BACK" FontSize="11" FontWeight="SemiBold"
+                             Foreground="#8E8E93" LetterSpacing="1" Margin="0,8,0,0"/>
+                  <TextBlock Text="{Binding Back}" FontSize="14" Foreground="#3C3C43" TextWrapping="Wrap"/>
+                  <TextBlock FontSize="11" Foreground="#C7C7CC" Margin="0,6,0,0">
+                    <TextBlock.Text>
+                      <MultiBinding StringFormat="Next review: {0:MMM d} · Interval: {1}d · EF: {2:F2}">
+                        <Binding Path="NextReviewDate"/>
+                        <Binding Path="Interval"/>
+                        <Binding Path="EasinessFactor"/>
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+                  <Button Content="Edit"
+                          Command="{Binding $parent[ItemsControl].((vm:ModuleDetailViewModel)DataContext).EditNoteCommand}"
+                          CommandParameter="{Binding}"
+                          Background="Transparent"
+                          Foreground="#007AFF"
+                          Padding="10,6"
+                          FontSize="13"/>
+                  <Button Content="✕"
+                          Command="{Binding $parent[ItemsControl].((vm:ModuleDetailViewModel)DataContext).DeleteNoteCommand}"
+                          CommandParameter="{Binding}"
+                          Background="Transparent"
+                          Foreground="#FF3B30"
+                          Padding="10,6"
+                          FontSize="14"/>
+                </StackPanel>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

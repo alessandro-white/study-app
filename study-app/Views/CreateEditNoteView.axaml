@@ -1,0 +1,61 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:StudyApp.ViewModels"
+             x:Class="StudyApp.Views.CreateEditNoteView"
+             x:DataType="vm:CreateEditNoteViewModel"
+             Background="#F5F5F7">
+  <Grid RowDefinitions="*,Auto,*">
+    <Border Grid.Row="1"
+            Background="White"
+            CornerRadius="16"
+            Padding="36"
+            Width="480"
+            BoxShadow="0 4 24 0 #1A000000"
+            HorizontalAlignment="Center">
+      <StackPanel Spacing="20">
+        <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="Bold" Foreground="#1D1D1F"/>
+
+        <StackPanel Spacing="8">
+          <TextBlock Text="Front (Question)" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Front}"
+                   Watermark="What do you want to remember?"
+                   CornerRadius="10" Padding="12,10"
+                   Height="100" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+          <TextBlock Text="Back (Answer)" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Back}"
+                   Watermark="The answer or explanation"
+                   CornerRadius="10" Padding="12,10"
+                   Height="100" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <TextBlock Text="{Binding ErrorMessage}" Foreground="#FF3B30" FontSize="13"
+                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <Grid ColumnDefinitions="*,*">
+          <Button Content="Cancel"
+                  Command="{Binding CancelCommand}"
+                  Background="#F2F2F7"
+                  Foreground="#1D1D1F"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Margin="0,0,8,0"/>
+          <Button Grid.Column="1"
+                  Content="Save Card"
+                  Command="{Binding SaveCommand}"
+                  Background="#007AFF"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  Margin="8,0,0,0"/>
+        </Grid>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

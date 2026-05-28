@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:StudyApp.ViewModels"
+             x:Class="StudyApp.Views.RegisterView"
+             x:DataType="vm:RegisterViewModel"
+             Background="#F5F5F7">
+  <Grid RowDefinitions="*,Auto,*">
+    <Border Grid.Row="1"
+            Background="White"
+            CornerRadius="16"
+            Padding="40"
+            Width="380"
+            BoxShadow="0 4 24 0 #1A000000"
+            HorizontalAlignment="Center">
+      <StackPanel Spacing="16">
+        <TextBlock Text="Create Account"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="#1D1D1F"
+                   HorizontalAlignment="Center"/>
+
+        <StackPanel Spacing="6">
+          <TextBlock Text="Username" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Username}" Watermark="Choose a username" CornerRadius="10" Padding="12,10"/>
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+          <TextBlock Text="Email" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Email}" Watermark="Enter your email" CornerRadius="10" Padding="12,10"/>
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+          <TextBlock Text="Password" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding Password}" PasswordChar="●" Watermark="Min. 6 characters" CornerRadius="10" Padding="12,10"/>
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+          <TextBlock Text="Confirm Password" FontSize="13" Foreground="#3C3C43"/>
+          <TextBox Text="{Binding ConfirmPassword}" PasswordChar="●" Watermark="Repeat password" CornerRadius="10" Padding="12,10"/>
+        </StackPanel>
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Foreground="#FF3B30"
+                   FontSize="13"
+                   TextWrapping="Wrap"
+                   IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+        <Button Content="Create Account"
+                Command="{Binding RegisterCommand}"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="#007AFF"
+                Foreground="White"
+                CornerRadius="10"
+                Padding="0,12"
+                FontSize="15"
+                FontWeight="SemiBold"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
+          <TextBlock Text="Already have an account?" FontSize="13" Foreground="#6E6E73"/>
+          <Button Content="Sign In"
+                  Command="{Binding GoToLoginCommand}"
+                  Padding="0"
+                  Background="Transparent"
+                  Foreground="#007AFF"
+                  FontSize="13"
+                  FontWeight="SemiBold"/>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

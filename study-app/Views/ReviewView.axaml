@@ -1,0 +1,147 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:StudyApp.ViewModels"
+             x:Class="StudyApp.Views.ReviewView"
+             x:DataType="vm:ReviewViewModel"
+             Background="#F5F5F7">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!-- Header -->
+    <Border Grid.Row="0" Background="White" Padding="24,16" BoxShadow="0 1 0 0 #15000000">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <Button Content="✕ Quit"
+                Command="{Binding QuitCommand}"
+                Background="Transparent"
+                Foreground="#6E6E73"
+                Padding="0,8"
+                FontSize="14"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="4">
+          <TextBlock Text="{Binding ModuleName}" FontSize="15" FontWeight="SemiBold" Foreground="#1D1D1F" HorizontalAlignment="Center"/>
+          <TextBlock FontSize="13" Foreground="#6E6E73" HorizontalAlignment="Center">
+            <TextBlock.Text>
+              <MultiBinding StringFormat="{}{0} of {1}">
+                <Binding Path="Reviewed"/>
+                <Binding Path="Total"/>
+              </MultiBinding>
+            </TextBlock.Text>
+          </TextBlock>
+        </StackPanel>
+        <ProgressBar Grid.Column="2"
+                     Minimum="0"
+                     Maximum="{Binding Total}"
+                     Value="{Binding Reviewed}"
+                     Width="100"
+                     Height="6"
+                     CornerRadius="3"
+                     Foreground="#34C759"
+                     VerticalAlignment="Center"/>
+      </Grid>
+    </Border>
+
+    <!-- Card Area -->
+    <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Border Background="White"
+              CornerRadius="20"
+              Width="540"
+              MinHeight="300"
+              BoxShadow="0 4 32 0 #1A000000"
+              Padding="40">
+        <StackPanel Spacing="24">
+          <!-- Front -->
+          <StackPanel Spacing="8">
+            <TextBlock Text="QUESTION" FontSize="11" FontWeight="SemiBold" Foreground="#8E8E93" LetterSpacing="1.5"/>
+            <TextBlock Text="{Binding CurrentNote.Front}"
+                       FontSize="22"
+                       Foreground="#1D1D1F"
+                       TextWrapping="Wrap"
+                       FontWeight="Medium"/>
+          </StackPanel>
+
+          <!-- Divider + Back (shown when flipped) -->
+          <Border Background="#F2F2F7" Height="1" IsVisible="{Binding IsFlipped}"/>
+
+          <StackPanel Spacing="8" IsVisible="{Binding IsFlipped}">
+            <TextBlock Text="ANSWER" FontSize="11" FontWeight="SemiBold" Foreground="#34C759" LetterSpacing="1.5"/>
+            <TextBlock Text="{Binding CurrentNote.Back}"
+                       FontSize="18"
+                       Foreground="#1D1D1F"
+                       TextWrapping="Wrap"/>
+          </StackPanel>
+
+          <!-- Flip Button (shown when not flipped) -->
+          <Button Content="Show Answer →"
+                  Command="{Binding FlipCommand}"
+                  IsVisible="{Binding !IsFlipped}"
+                  Background="#007AFF"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,14"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  FontSize="15"
+                  FontWeight="SemiBold"/>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!-- Rating Buttons (shown when flipped) -->
+    <Border Grid.Row="2"
+            Background="White"
+            Padding="24,20"
+            BoxShadow="0 -1 0 0 #15000000"
+            IsVisible="{Binding IsFlipped}">
+      <StackPanel Spacing="12">
+        <TextBlock Text="How well did you remember?" FontSize="13" Foreground="#6E6E73" HorizontalAlignment="Center"/>
+        <Grid ColumnDefinitions="*,*,*,*" HorizontalAlignment="Center" Width="540">
+          <Button Grid.Column="0"
+                  Content="Again"
+                  Command="{Binding RateCommand}"
+                  CommandParameter="0"
+                  Background="#FF3B30"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  FontWeight="SemiBold"
+                  Margin="0,0,6,0"/>
+          <Button Grid.Column="1"
+                  Content="Hard"
+                  Command="{Binding RateCommand}"
+                  CommandParameter="2"
+                  Background="#FF9500"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  FontWeight="SemiBold"
+                  Margin="0,0,6,0"/>
+          <Button Grid.Column="2"
+                  Content="Good"
+                  Command="{Binding RateCommand}"
+                  CommandParameter="4"
+                  Background="#34C759"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  FontWeight="SemiBold"
+                  Margin="0,0,6,0"/>
+          <Button Grid.Column="3"
+                  Content="Easy"
+                  Command="{Binding RateCommand}"
+                  CommandParameter="5"
+                  Background="#007AFF"
+                  Foreground="White"
+                  CornerRadius="10"
+                  Padding="0,12"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  FontWeight="SemiBold"/>
+        </Grid>
+        <TextBlock Text="Again=0  Hard=2  Good=4  Easy=5" FontSize="11" Foreground="#C7C7CC" HorizontalAlignment="Center"/>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
